@@ -4,11 +4,49 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var helmet = require('helmet');
+var session = require('express-session');
+var passport = require('passport');
+var FaceBookStrategy = require('passport-facebook').Strategy;
+
+passport.serializeUser(function (user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function (obj, done) {
+    done(null, obj);
+});
+
+passport.use(new FaceBookStrategy({
+    clientID: process.env.FACEBOOK_CLIENT_ID,
+    clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+    callbackURL: 'https://mfunaki.jp:8000/auth/facebook/callback',
+    profileFields: ['id', 'displayName', 'photos', 'email']
+},
+function (accessToken, refreshToken, profile, done) {
+    process.nextTick(function () {
+        console.log(profile);
+        return done(null, profile);
+    });
+}));
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+var login = require('./routes/login');
+var logout = require('./routes/logout');
+
 
 var app = express();
+
+app.use(helmet());
+
+app.use(session({
+    secret: '417cce55dcfcfaeb',
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,7 +63,24 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
+app.use('/login', login);
+app.use('/logout', logout);
+
+
+app.get('/auth/facebook',
+    passport.authenticate('facebook', {
+        scope: ['public_profile']
+    }),
+    function (req, res) {});
+
+
+app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', {
+        failureRedirect: '/login'
+    }),
+    function (req, res) {
+        res.redirect('/');
+    });
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

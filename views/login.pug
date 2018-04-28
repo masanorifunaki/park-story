@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  a(href="/auth/facebook") facebookでログイン
+  if user
+    p 現在 #{user.displayName} でログイン中
+    img(src=`${user.photos[0].value}`, alt="")
