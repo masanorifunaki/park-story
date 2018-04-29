@@ -7,6 +7,7 @@ const Appointment = require('../models/appointment');
 /* GET home page. */
 router.get('/', function (req, res, next) {
     const title = '東京公園ストーリー';
+
     TimeFrame.findAll({
         include: [{
             model: Course,
@@ -18,6 +19,22 @@ router.get('/', function (req, res, next) {
             title: title,
             user: req.user,
             courses: courses
+        });
+    });
+});
+
+router.get('/:courseId', (req, res, next) => {
+    TimeFrame.findOne({
+        include: [{
+            model: Course,
+            attributes: ['courseId', 'courseName', 'courseDescription']
+        }],
+        where: {
+            courseId: req.params.courseId
+        }
+    }).then((course) => {
+        res.render('course', {
+            course: course
         });
     });
 });
