@@ -7,6 +7,13 @@ var bodyParser = require('body-parser');
 var helmet = require('helmet');
 var session = require('express-session');
 var passport = require('passport');
+
+// TODO: モデルの読み込み
+var User = require('./models/user');
+User.sync();
+
+
+
 var FaceBookStrategy = require('passport-facebook').Strategy;
 
 passport.serializeUser(function (user, done) {
@@ -25,8 +32,13 @@ passport.use(new FaceBookStrategy({
 },
 function (accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
-        console.log(profile);
-        return done(null, profile);
+        User.upsert({
+            userId: profile.id,
+            userName: profile.displayName,
+            userImg: profile.photos[0].value
+        }).then(() => {
+            done(null, profile);
+        });
     });
 }));
 
