@@ -10,3 +10,15 @@ block content
       a(href="/logout") #{user.displayName} をログアウト
     else
       a(href="/login") ログイン
+  div
+    each course in courses
+      h3 #{course.course.courseName}
+      p #{course.course.courseDescription}
+      p #{course.courseTime}
+      form(action="/submit", method="post")
+        if user
+          input(type="hidden", name="userId" value=`${user.id}`)
+          input(type="hidden", name="courseId" value=`${course.courseId}`)
+          button(type="submit") 参加する
+
+
