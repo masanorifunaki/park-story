@@ -8,9 +8,26 @@ var helmet = require('helmet');
 var session = require('express-session');
 var passport = require('passport');
 
-// TODO: モデルの読み込み
 var User = require('./models/user');
-User.sync();
+var Course = require('./models/course');
+var TimeFrame = require('./models/time_frame');
+var Appointment = require('./models/appointment');
+User.sync().then(() => {
+    Course.sync().then(() => {
+        TimeFrame.belongsTo(Course, {
+            foreignKey: 'courseId'
+        });
+        TimeFrame.sync();
+    }).then(() => {
+        Appointment.belongsTo(User, {
+            foreignKey: 'userId'
+        });
+        Appointment.belongsTo(TimeFrame, {
+            foreignKey: 'courseId'
+        });
+        Appointment.sync();
+    });
+});
 
 
 
@@ -45,6 +62,7 @@ function (accessToken, refreshToken, profile, done) {
 var index = require('./routes/index');
 var login = require('./routes/login');
 var logout = require('./routes/logout');
+var courses = require('./routes/courses');
 
 
 var app = express();
@@ -77,6 +95,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/login', login);
 app.use('/logout', logout);
+app.use('/courses', courses);
 
 
 app.get('/auth/facebook',
