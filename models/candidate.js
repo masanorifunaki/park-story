@@ -10,7 +10,7 @@ const Candidate = loader.database.define('candidates', {
         allowNull: false
     },
     candidateTime: {
-        type: Sequelize.DATE(6),
+        type: Sequelize.TEXT,
         allowNull: false
     },
     courseId: {

@@ -53,7 +53,7 @@
 |candidate の属性名|形式|内容|
 |----|----|----|
 |candidateId|数値|ID 主キー 連番|
-|candidateTime|時間|開催時間|
+|candidateTime|文字列|開催時間|
 |courseId|文字列|関連するコースID|
 
 |appointment の属性名|形式|内容|
