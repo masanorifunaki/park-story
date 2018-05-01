@@ -10,12 +10,5 @@ block content
       a(href="/logout") #{user.displayName} をログアウト
     else
       a(href="/login") ログイン
-  div
-    each course in courses
-      div
-        h3 #{course.course.courseName}
-        p #{course.course.courseDescription}
-        p #{course.courseTime}
-        a(href=`/${course.courseId}`) 詳細を確認する。
 
 

@@ -5,21 +5,25 @@ const Sequelize = loader.Sequelize;
 const Course = loader.database.define('courses', {
     courseId: {
         type: Sequelize.INTEGER,
-        autoIncrement: true,
         primaryKey: true,
+        autoIncrement: true,
         allowNull: false
     },
     courseName: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false
     },
-    courseDescription: {
+    courseMemo: {
         type: Sequelize.TEXT,
+        allowNull: false
+    },
+    courseDay: {
+        type: Sequelize.DATEONLY,
         allowNull: false
     }
 }, {
     freezeTableName: true,
-    timestamps: true
+    timestamps: true,
 });
 
 module.exports = Course;
