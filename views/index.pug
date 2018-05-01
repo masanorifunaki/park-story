@@ -10,5 +10,15 @@ block content
       a(href="/logout") #{user.displayName} をログアウト
     else
       a(href="/login") ログイン
+  div
+    each candidate in candidates
+      div
+        h4 #{candidate.course.courseName}
+        p #{candidate.course.courseMemo}
+        p #{candidate.course.formattedCourseDay}
+        p #{candidate.candidateTime}
+        a(href=`/course/${candidate.course.courseId}/${candidate.candidateId}`) 確認する
+
+
 
 

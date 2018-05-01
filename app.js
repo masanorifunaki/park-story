@@ -63,6 +63,7 @@ var index = require('./routes/index');
 var login = require('./routes/login');
 var logout = require('./routes/logout');
 var course = require('./routes/course');
+var appointment = require('./routes/appointment');
 
 
 var app = express();
@@ -96,6 +97,7 @@ app.use('/', index);
 app.use('/login', login);
 app.use('/logout', logout);
 app.use('/course', course);
+app.use('/course', appointment);
 
 app.get('/auth/facebook',
     passport.authenticate('facebook', {

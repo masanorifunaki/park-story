@@ -4,6 +4,7 @@ const router = express.Router();
 const auth = require('http-auth');
 const Course = require('../models/course');
 const Candidate = require('../models/candidate');
+const moment = require('moment-timezone');
 
 const basic = auth.basic({
     realm: 'Enter username and password.',
@@ -31,6 +32,26 @@ router.post('/', (req, res, next) => {
         });
         Candidate.bulkCreate(candidates).then(() => {
             res.redirect('/');
+        });
+    });
+});
+
+router.get('/:courseId/:candidateId', (req, res, next) => {
+    Candidate.findOne({
+        include: [{
+            model: Course,
+            attributes: ['courseId', 'courseName', 'courseMemo', 'courseDay']
+        }],
+        where: {
+            candidateId: req.params.candidateId
+        },
+        order: '"updatedAt" DESC'
+    }).then((candidate) => {
+        candidate.course.formattedCourseDay = moment(candidate.course.courseDay).tz('Asia/Tokyo').format('YYYY/MM/DD');
+        res.render('course', {
+            user: req.user,
+            candidate: candidate,
+            formattedCourseDay: candidate.course.formattedCourseDay
         });
     });
 });

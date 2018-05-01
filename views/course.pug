@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1 #{candidate.course.courseName}
+  p #{candidate.course.courseMemo}
+  p #{formattedCourseDay}
+  p #{candidate.candidateTime}
+  if user
+    form(action=`/course/${candidate.course.courseId}/${candidate.candidateId}/${user.id}/submit`, method="post")
+      input(type="hidden", name="appointment" value="1")
+      button(type="submit") 参加する
+  else
+    a(href="/login") ログイン

@@ -14,13 +14,13 @@
 |/login|GET|ログイン|
 |/logout|GET|ログアウト|
 |/course/new|GET|コース作成ページ（管理者専用）|
-|/course/:courseId|GET|コース詳細ページ|
+|/course/:courseId/:candidateId|GET|コース詳細ページ|
 ## WebAPIのURL
 |パス|メソッド|処理内容|利用方法|
 |----|----|----|----|
 |/course|POST|コース作成|フォーム|
 |/course/:courseId?edit=1|POST|コース編集|フォーム|
-|/course/:courseId/:userId/submit|POST|参加表明|フォーム|
+|/course/:courseId/:candidateId/:userId/submit|POST|参加表明|フォーム|
 # モジュール設計
 ## Router モジュール一覧
 |ファイル名|責務|
