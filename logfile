@@ -1,0 +1,12 @@
+LOG:  database system was shut down at 2018-05-02 01:26:09 JST
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  column candidate.userId does not exist at character 230
+STATEMENT:  SELECT "appointments"."candidateId", "appointments"."userId", "appointments"."appointment", "appointments"."courseId", "appointments"."createdAt", "appointments"."updatedAt", "candidate"."candidateId" AS "candidate.candidateId", "candidate"."userId" AS "candidate.userId" FROM "appointments" AS "appointments" LEFT OUTER JOIN "candidates" AS "candidate" ON "appointments"."candidateId" = "candidate"."candidateId" WHERE "appointments"."userId" = '911578999013587' LIMIT 1;
+ERROR:  column candidate.userId does not exist at character 230
+STATEMENT:  SELECT "appointments"."candidateId", "appointments"."userId", "appointments"."appointment", "appointments"."courseId", "appointments"."createdAt", "appointments"."updatedAt", "candidate"."candidateId" AS "candidate.candidateId", "candidate"."userId" AS "candidate.userId" FROM "appointments" AS "appointments" LEFT OUTER JOIN "candidates" AS "candidate" ON "appointments"."candidateId" = "candidate"."candidateId" WHERE "appointments"."userId" = '911578999013587' AND "appointments"."candidateId" = '5';
+ERROR:  syntax error at or near "DEFAULT" at character 124
+STATEMENT:  SELECT "candidateId", "candidateTime", "courseId", "createdAt", "updatedAt" FROM "public"."candidates" WHERE "candidateId"=DEFAULT LIMIT 1
+ERROR:  syntax error at or near "DEFAULT" at character 103
+STATEMENT:  SELECT "userId", "userName", "userImg", "createdAt", "updatedAt" FROM "public"."users" WHERE "userId"=DEFAULT LIMIT 1
