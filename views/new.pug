@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  form(method="post", action="/course")
+    div
+      h5 コース名
+      input(type="text" name="courseName")
+    div
+      h5 メモ
+      textarea(name="courseMemo")
+    div
+      h5 候補日
+      input(type="date", name="courseDay")
+    div
+      h5 候補時間 改行して入力してください
+      textarea(name="candidates")
+    button(type="submit") コースをつくる。

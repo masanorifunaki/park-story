@@ -2,21 +2,16 @@
 const loader = require('./sequelize-loader');
 const Sequelize = loader.Sequelize;
 
-const Appointment = loader.database.define('appointments', {
+const Candidate = loader.database.define('candidates', {
     candidateId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
         allowNull: false
     },
-    userId: {
-        type: Sequelize.BIGINT,
-        primaryKey: true,
+    candidateTime: {
+        type: Sequelize.TEXT,
         allowNull: false
-    },
-    appointment: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 0
     },
     courseId: {
         type: Sequelize.INTEGER,
@@ -30,4 +25,4 @@ const Appointment = loader.database.define('appointments', {
     }]
 });
 
-module.exports = Appointment;
+module.exports = Candidate;

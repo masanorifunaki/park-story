@@ -11,11 +11,14 @@ block content
     else
       a(href="/login") ログイン
   div
-    each course in courses
+    each candidate in candidates
       div
-        h3 #{course.course.courseName}
-        p #{course.course.courseDescription}
-        p #{course.courseTime}
-        a(href=`/${course.courseId}`) 詳細を確認する。
+        h4 #{candidate.course.courseName}
+        p #{candidate.course.courseMemo}
+        p #{candidate.course.formattedCourseDay}
+        p #{candidate.candidateTime}
+        a(href=`/course/${candidate.course.courseId}/${candidate.candidateId}`) 確認する
+
+
 
 

@@ -13,7 +13,7 @@ const User = loader.database.define('users', {
         allowNull: false
     },
     userImg: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false
     }
 }, {

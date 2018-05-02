@@ -1,51 +1,30 @@
 var express = require('express');
 var router = express.Router();
 const Course = require('../models/course');
-const TimeFrame = require('../models/time_frame');
-const Appointment = require('../models/appointment');
+const Candidate = require('../models/candidate');
+const moment = require('moment-timezone');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
     const title = '東京公園ストーリー';
-
-    TimeFrame.findAll({
+    Candidate.findAll({
         include: [{
             model: Course,
-            attributes: ['courseId', 'courseName', 'courseDescription']
+            attributes: ['courseId', 'courseName', 'courseMemo', 'courseDay']
         }],
         order: '"updatedAt" DESC'
-    }).then((courses) => {
+    }).then((candidates) => {
+        candidates.forEach((candidate) => {
+            candidate.course.formattedCourseDay = moment(candidate.course.courseDay).tz('Asia/Tokyo').format('YYYY/MM/DD');
+        });
         res.render('index', {
             title: title,
             user: req.user,
-            courses: courses
+            candidates: candidates
         });
     });
+
 });
 
-router.get('/:courseId', (req, res, next) => {
-    TimeFrame.findOne({
-        include: [{
-            model: Course,
-            attributes: ['courseId', 'courseName', 'courseDescription']
-        }],
-        where: {
-            courseId: req.params.courseId
-        }
-    }).then((course) => {
-        res.render('course', {
-            course: course
-        });
-    });
-});
-
-router.post('/submit', (req, res, next) => {
-    Appointment.upsert({
-        userId: req.body.userId,
-        courseId: req.body.courseId
-    }).then(() => {
-        res.redirect('/');
-    });
-});
 
 module.exports = router;

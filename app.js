@@ -8,28 +8,28 @@ var helmet = require('helmet');
 var session = require('express-session');
 var passport = require('passport');
 
+// モデルの読み込み
 var User = require('./models/user');
 var Course = require('./models/course');
-var TimeFrame = require('./models/time_frame');
+var Candidate = require('./models/candidate');
 var Appointment = require('./models/appointment');
+
 User.sync().then(() => {
     Course.sync().then(() => {
-        TimeFrame.belongsTo(Course, {
+        Candidate.belongsTo(Course, {
             foreignKey: 'courseId'
         });
-        TimeFrame.sync();
-    }).then(() => {
         Appointment.belongsTo(User, {
             foreignKey: 'userId'
         });
-        Appointment.belongsTo(TimeFrame, {
-            foreignKey: 'courseId'
+        Candidate.sync().then(() => {
+            Appointment.belongsTo(Candidate, {
+                foreignKey: 'candidateId'
+            });
+            Appointment.sync();
         });
-        Appointment.sync();
     });
 });
-
-
 
 var FaceBookStrategy = require('passport-facebook').Strategy;
 
@@ -62,7 +62,8 @@ function (accessToken, refreshToken, profile, done) {
 var index = require('./routes/index');
 var login = require('./routes/login');
 var logout = require('./routes/logout');
-var courses = require('./routes/courses');
+var course = require('./routes/course');
+var appointment = require('./routes/appointment');
 
 
 var app = express();
@@ -95,8 +96,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/login', login);
 app.use('/logout', logout);
-app.use('/courses', courses);
-
+app.use('/course', course);
+app.use('/course', appointment);
 
 app.get('/auth/facebook',
     passport.authenticate('facebook', {
