@@ -9,7 +9,7 @@ $('.appointment-toggle-button').each((i, e) => {
         const candidateId = button.data('candidate-id');
         const appointment = parseInt(button.data('appointment'));
         const nextAppointment = (appointment + 1) % 2;
-        console.log(nextAppointment);
+
         $.post(`/course/${courseId}/${candidateId}/${userId}/ajax`, {
             candidateId: candidateId,
             appointment: nextAppointment
@@ -18,6 +18,20 @@ $('.appointment-toggle-button').each((i, e) => {
             button.data('appointment', data.appointment.appointment);
             const appointmentLabels = ['参加します', 'キャンセルします'];
             button.text(appointmentLabels[data.appointment]);
+        });
+    });
+});
+
+$('.deleteCandidateAppointment').each((i, e) => {
+    const button = $(e);
+    button.click(() => {
+        const courseId = button.data('course-id');
+
+        const candidateId = button.data('candidate-id');
+
+        $.post(`/course/${courseId}/${candidateId}?delete=1`, {
+            courseId: courseId,
+            candidateId: candidateId,
         });
     });
 });
