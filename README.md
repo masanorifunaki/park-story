@@ -9,7 +9,7 @@
 |パス|メソッド|ページ内容|
 |----|----|----|
 |/|GET|トップ/コース一覧|
-|/mypage|GET|参加予定コース表示|
+|/:userId|GET|マイページ/参加予定コース表示|
 |/login|GET|ログイン|
 |/logout|GET|ログアウト|
 |/course/new|GET|コース作成ページ（管理者専用）|
@@ -19,13 +19,15 @@
 |パス|メソッド|処理内容|利用方法|
 |----|----|----|----|
 |/course|POST|コース作成|フォーム|
-|/course/:courseId?edit=1|POST|コース編集|フォーム|
+|/course/:courseId/:candidateId/?edit=1|POST|コース編集|フォーム|
 |/course/:courseId/:candidateId/:userId/submit|POST|参加表明|フォーム|
 |/course/:courseId/:candidateId/:userId/ajax|POST|参加更新|Ajax|
+|/course/:courseId/:candidateId?delete=1|POST|候補時間、参加表明削除|Ajax|
 # モジュール設計
 ## Router モジュール一覧
 |ファイル名|責務|
 |----|----|
+|routes/mypage.js|マイページに関する処理|
 |routes/login.js|ログイン処理|
 |routes/logout.js|ログアウト処理|
 |routes/course.js|コースに関連する処理|
@@ -51,6 +53,7 @@
 |courseName|文字列|コース名|
 |courseMemo|文字列|コースの説明|
 |courseDay|日付|開催日|
+|courseImgFile|文字列|コースの画像|
 
 |candidate の属性名|形式|内容|
 |----|----|----|
