@@ -2,6 +2,16 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('http-auth');
+const multer = require('multer');
+const upload = multer({
+    dest: './public/images/uploads/'
+});
+const cloudinary = require('cloudinary');
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 const Course = require('../models/course');
 const Candidate = require('../models/candidate');
 const Appointment = require('../models/appointment');
@@ -20,18 +30,22 @@ router.get('/new', authenticationEnsurer, auth.connect(basic), (req, res, next) 
     });
 });
 
-router.post('/', (req, res, next) => {
-    Course.create({
-        courseName: req.body.courseName,
-        courseMemo: req.body.courseMemo,
-        courseDay: req.body.courseDay
-    }).then((course) => {
-        const candidateTimes = parseCandidateTimes(req);
-        if (candidateTimes) {
-            createCandidatesAndRedirect(candidateTimes, course.courseId, res);
-        } else {
-            res.redirect('/');
-        }
+router.post('/', upload.single('courseImgFile'), (req, res, next) => {
+    const path = req.file.path;
+    cloudinary.uploader.upload(path, (result) => {
+        Course.create({
+            courseName: req.body.courseName,
+            courseMemo: req.body.courseMemo,
+            courseDay: req.body.courseDay,
+            courseImgFile: result.url
+        }).then((course) => {
+            const candidateTimes = parseCandidateTimes(req);
+            if (candidateTimes) {
+                createCandidatesAndRedirect(candidateTimes, course.courseId, res);
+            } else {
+                res.redirect('/');
+            }
+        });
     });
 });
 

@@ -17,6 +17,8 @@ block content
         p #{candidate.course.courseMemo}
         p #{candidate.course.formattedCourseDay}
         p #{candidate.candidateTime}
+        div
+          img(src=`${candidate.course.courseImgFile}`, alt="")
         a(href=`/course/${candidate.course.courseId}/${candidate.candidateId}`) 確認する
 
 

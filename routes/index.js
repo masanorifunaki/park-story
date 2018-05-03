@@ -10,7 +10,7 @@ router.get('/', function (req, res, next) {
     Candidate.findAll({
         include: [{
             model: Course,
-            attributes: ['courseId', 'courseName', 'courseMemo', 'courseDay']
+            attributes: ['courseId', 'courseName', 'courseMemo', 'courseDay', 'courseImgFile']
         }],
         order: '"updatedAt" DESC'
     }).then((candidates) => {
