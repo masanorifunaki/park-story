@@ -44,5 +44,8 @@
     "prettier": "^1.12.1",
     "supertest": "^1.2.0",
     "webpack": "^3.10.0"
+  },
+  "engines": {
+    "node": "8.9.4"
   }
 }

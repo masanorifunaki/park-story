@@ -47,7 +47,7 @@ passport.deserializeUser(function (obj, done) {
 passport.use(new FaceBookStrategy({
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: 'https://mfunaki.jp:8000/auth/facebook/callback',
+    callbackURL: process.env.HEROKU_URL ? process.env.HEROKU_URL + 'auth/facebook/callback' : 'https://mfunaki.jp:8000/auth/facebook/callback',
     profileFields: ['id', 'displayName', 'photos', 'email']
 },
 function (accessToken, refreshToken, profile, done) {
@@ -116,7 +116,16 @@ app.get('/auth/facebook/callback',
         failureRedirect: '/login'
     }),
     function (req, res) {
-        res.redirect('/');
+        var loginFrom = req.cookies.loginFrom;
+        // オープンリダイレクタ脆弱性対策
+        if (loginFrom &&
+      loginFrom.indexOf('http://') < 0 &&
+      loginFrom.indexOf('https://') < 0) {
+            res.clearCookie('loginFrom');
+            res.redirect(loginFrom);
+        } else {
+            res.redirect('/');
+        }
     });
 
 // catch 404 and forward to error handler

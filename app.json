@@ -1,0 +1,9 @@
+{
+  "name": "park-story",
+  "description": "東京公園ストーリー",
+  "logo": "",
+  "keywords": [
+    "node"
+  ],
+  "image": "heroku/nodejs"
+}
