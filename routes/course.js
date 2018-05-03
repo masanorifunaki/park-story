@@ -75,4 +75,75 @@ router.get('/:courseId/:candidateId', authenticationEnsurer, (req, res, next) =>
     });
 });
 
+router.get('/:courseId/:candidateId/edit', authenticationEnsurer, auth.connect(basic), (req, res, next) => {
+    Course.findOne({
+        where: {
+            courseId: req.params.courseId
+        }
+    }).then((course) => {
+        Candidate.findAll({
+            where: {
+                courseId: course.courseId
+            },
+            order: '"candidateId" ASC'
+        }).then((candidates) => {
+            res.render('edit', {
+                user: req.user,
+                course: course,
+                candidates: candidates
+            });
+        });
+    });
+});
+
+// router.get('/:courseId/edit', authenticationEnsurer, auth.connect(basic), (req, res, next) => {
+//     Course.findOne({
+//         where: {
+//             courseId: req.params.courseId
+//         }
+//     }).then((course) => {
+//         return Promise.all(course.update({
+//             courseId: course.courseId,
+//             courseName: course.courseName,
+//             courseMemo: course.courseMemo,
+//             courseDay: course.courseDay
+//         }));
+//     }).then((course) => {
+//         return Promise.all(Candidate.findAll({
+//             where: {
+//                 courseId: course.courseId
+//             },
+//             order: '"candidateId" ASC'
+//         }));
+//     }).then((candidates) => {
+//     // 追加されているかチェック
+//         const candidateTimes = parseCandidateTimes(req);
+//         if (candidateTimes) {
+//             createCandidatesAndRedirect(candidateTimes, candidates.courseid, res);
+//         } else {
+//             res.redirect(`/course/${candidates.courseid}`);
+//         }
+//     });
+
+
+// });
+
+function createCandidatesAndRedirect(candidateTimes, courseId, res) {
+
+    const candidates = candidateTimes.map((c) => {
+        return {
+            candidateTime: c,
+            courseId: courseId
+        };
+    });
+    Candidate.bulkCreate(candidates).then(() => {
+        res.redirect('/');
+    });
+}
+
+//リクエストから候補日の配列をパースする処理
+function parseCandidateTimes(req) {
+    return req.body.candidates.trim().split('\n').map((s) => s.trim());
+}
+
 module.exports = router;

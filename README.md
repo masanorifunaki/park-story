@@ -10,17 +10,18 @@
 |----|----|----|
 |/|GET|トップ/コース一覧|
 |/mypage|GET|参加予定コース表示|
-|/mypage/:courseId|GET|参加コース表示/参加者一覧（連絡もできるように）|
 |/login|GET|ログイン|
 |/logout|GET|ログアウト|
 |/course/new|GET|コース作成ページ（管理者専用）|
-|/course/:courseId/:candidateId|GET|コース詳細ページ|
+|/course/:courseId/:candidateId|GET|コース詳細ページ/参加表明時、参加者表示|
+|/course/:courseId/:candidateId/edit|GET|コース編集ページ|
 ## WebAPIのURL
 |パス|メソッド|処理内容|利用方法|
 |----|----|----|----|
 |/course|POST|コース作成|フォーム|
 |/course/:courseId?edit=1|POST|コース編集|フォーム|
 |/course/:courseId/:candidateId/:userId/submit|POST|参加表明|フォーム|
+|/course/:courseId/:candidateId/:userId/ajax|POST|参加更新|Ajax|
 # モジュール設計
 ## Router モジュール一覧
 |ファイル名|責務|
@@ -29,6 +30,7 @@
 |routes/logout.js|ログアウト処理|
 |routes/course.js|コースに関連する処理|
 |routes/appointment.js|参加の更新に関する処理|
+|routes/authentication-ensurer.js|facebook認証|
 ## データモデル一覧
 |ファイル名|責務|テーブル名|
 |----|----|----|
