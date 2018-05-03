@@ -84,7 +84,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
         var candidateId = button.data('candidate-id');
         var appointment = parseInt(button.data('appointment'));
         var nextAppointment = (appointment + 1) % 2;
-        console.log(nextAppointment);
+
         _jquery2.default.post('/course/' + courseId + '/' + candidateId + '/' + userId + '/ajax', {
             candidateId: candidateId,
             appointment: nextAppointment
@@ -92,6 +92,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
             button.data('appointment', data.appointment.appointment);
             var appointmentLabels = ['参加します', 'キャンセルします'];
             button.text(appointmentLabels[data.appointment]);
+        });
+    });
+});
+
+(0, _jquery2.default)('.deleteCandidateAppointment').each(function (i, e) {
+    var button = (0, _jquery2.default)(e);
+    button.click(function () {
+        var courseId = button.data('course-id');
+
+        var candidateId = button.data('candidate-id');
+
+        _jquery2.default.post('/course/' + courseId + '/' + candidateId + '?delete=1', {
+            courseId: courseId,
+            candidateId: candidateId
         });
     });
 });

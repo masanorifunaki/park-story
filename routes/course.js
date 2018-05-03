@@ -26,16 +26,12 @@ router.post('/', (req, res, next) => {
         courseMemo: req.body.courseMemo,
         courseDay: req.body.courseDay
     }).then((course) => {
-        const candidateTimes = req.body.candidates.trim().split('\n').map((s) => s.trim());
-        const candidates = candidateTimes.map((c) => {
-            return {
-                candidateTime: c,
-                courseId: course.courseId
-            };
-        });
-        Candidate.bulkCreate(candidates).then(() => {
+        const candidateTimes = parseCandidateTimes(req);
+        if (candidateTimes) {
+            createCandidatesAndRedirect(candidateTimes, course.courseId, res);
+        } else {
             res.redirect('/');
-        });
+        }
     });
 });
 
@@ -96,37 +92,68 @@ router.get('/:courseId/:candidateId/edit', authenticationEnsurer, auth.connect(b
     });
 });
 
-// router.get('/:courseId/edit', authenticationEnsurer, auth.connect(basic), (req, res, next) => {
-//     Course.findOne({
-//         where: {
-//             courseId: req.params.courseId
-//         }
-//     }).then((course) => {
-//         return Promise.all(course.update({
-//             courseId: course.courseId,
-//             courseName: course.courseName,
-//             courseMemo: course.courseMemo,
-//             courseDay: course.courseDay
-//         }));
-//     }).then((course) => {
-//         return Promise.all(Candidate.findAll({
-//             where: {
-//                 courseId: course.courseId
-//             },
-//             order: '"candidateId" ASC'
-//         }));
-//     }).then((candidates) => {
-//     // 追加されているかチェック
-//         const candidateTimes = parseCandidateTimes(req);
-//         if (candidateTimes) {
-//             createCandidatesAndRedirect(candidateTimes, candidates.courseid, res);
-//         } else {
-//             res.redirect(`/course/${candidates.courseid}`);
-//         }
-//     });
+router.post('/:courseId', authenticationEnsurer, auth.connect(basic), (req, res, next) => {
+    if (parseInt(req.query.edit) === 1) {
+        Course.findOne({
+            where: {
+                courseId: req.params.courseId
+            }
+        }).then((course) => {
+            Course.upsert({
+                courseId: course.courseId,
+                courseName: req.body.courseName,
+                courseMemo: req.body.courseMemo,
+                courseDay: req.body.courseDay
+            }).then(() => {
+                const candidateTimes = parseCandidateTimes(req);
+                if (candidateTimes) {
+                    createCandidatesAndRedirect(candidateTimes, req.params.courseId, res);
+                } else {
+                    res.redirect('/');
+                }
+            });
+        });
+    } else {
+        const err = new Error('不正なリクエストです');
+        err.status = 400;
+        next(err);
+    }
+});
 
+router.post('/:courseId/:candidateId', authenticationEnsurer, auth.connect(basic), (req, res, next) => {
+    if (parseInt(req.query.delete) === 1) {
+        deleteCandidateAppointment(req.body.courseId, req.body.candidateId, () => {
+            // TODO: リダイレクトできない原因調べる
+            res.redirect('/');
+        });
+    }
+});
 
-// });
+function deleteCandidateAppointment(courseId, candidateId, done, err) {
+    // TODO: コース自体の削除をどうするか考える
+    Appointment.findAll({
+        where: {
+            candidateId: candidateId,
+        }
+    }).then((appointments) => {
+        return Promise.all(appointments.map((a) => {
+            return a.destroy();
+        }));
+    });
+
+    Candidate.findOne({
+        where: {
+            courseId: courseId,
+            candidateId: candidateId
+        }
+    }).then((candidate) => {
+        return candidate.destroy();
+    }).then(() => {
+        if (err) return done(err);
+        done();
+    });
+
+}
 
 function createCandidatesAndRedirect(candidateTimes, courseId, res) {
 

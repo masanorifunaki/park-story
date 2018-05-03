@@ -10,7 +10,7 @@ const Appointment = loader.database.define('appointments', {
     },
     userId: {
         type: Sequelize.BIGINT,
-        primaryKey: true,
+        // primaryKey: true,
         allowNull: false
     },
     appointment: {
