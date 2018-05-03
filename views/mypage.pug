@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  if candidates
+    each c in candidates
+      h1 #{c.candidate.course.courseName}
+      p #{c.candidate.candidateTime}
+      a(href=`/course/${c.candidate.course.courseId}/${c.candidate.candidateId}`) 確認する
+

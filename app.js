@@ -26,6 +26,9 @@ User.sync().then(() => {
             Appointment.belongsTo(Candidate, {
                 foreignKey: 'candidateId'
             });
+            Appointment.belongsTo(Course, {
+                foreignKey: 'courseId'
+            });
             Appointment.sync();
         });
     });
@@ -64,6 +67,7 @@ var login = require('./routes/login');
 var logout = require('./routes/logout');
 var course = require('./routes/course');
 var appointment = require('./routes/appointment');
+var mypage = require('./routes/mypage');
 
 
 var app = express();
@@ -94,6 +98,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+app.use('/', mypage);
 app.use('/login', login);
 app.use('/logout', logout);
 app.use('/course', course);
