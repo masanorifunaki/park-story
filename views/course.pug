@@ -14,9 +14,16 @@ block content
         data-user-id=user.id
         data-candidate-id=candidate.candidateId
         data-appointment=appointment.appointment).appointment-toggle-button #{appointmentLabels[`${appointment.appointment}`]}
+        div
+        h2 このイベントの参加者です。
+        if allUsers
+          each u in allUsers
+            a(href=`https://www.facebook.com/${u.userId}`)
+              img(src=`${u.user.userImg}`, alt="")
     else
       form(action=`/course/${candidate.course.courseId}/${candidate.candidateId}/${user.id}/submit`, method="post")
         input(type="hidden", name="appointment" value="1")
         button(type="submit") 参加する
+
   else
     a(href="/login") ログイン

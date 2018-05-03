@@ -50,6 +50,19 @@ router.post('/', upload.single('courseImgFile'), (req, res, next) => {
 });
 
 router.get('/:courseId/:candidateId', authenticationEnsurer, (req, res, next) => {
+    let allUsers = null;
+    Appointment.findAll({
+        include: [{
+            model: User,
+            attributes: ['userId', 'userName', 'userImg', ]
+        }],
+        where: {
+            candidateId: req.params.candidateId,
+            appointment: 1,
+        }
+    }).then((a) => {
+        allUsers = a;
+    });
     Candidate.findOne({
         include: [{
             model: Course,
@@ -73,6 +86,7 @@ router.get('/:courseId/:candidateId', authenticationEnsurer, (req, res, next) =>
                     candidate: c,
                     appointment: appointment,
                     formattedCourseDay: c.course.formattedCourseDay,
+                    allUsers: allUsers
                 });
             });
         } else {
