@@ -10,3 +10,7 @@ ERROR:  syntax error at or near "DEFAULT" at character 124
 STATEMENT:  SELECT "candidateId", "candidateTime", "courseId", "createdAt", "updatedAt" FROM "public"."candidates" WHERE "candidateId"=DEFAULT LIMIT 1
 ERROR:  syntax error at or near "DEFAULT" at character 103
 STATEMENT:  SELECT "userId", "userName", "userImg", "createdAt", "updatedAt" FROM "public"."users" WHERE "userId"=DEFAULT LIMIT 1
+LOG:  autovacuum launcher shutting down
+LOG:  received smart shutdown request
+LOG:  shutting down
+LOG:  database system is shut down
