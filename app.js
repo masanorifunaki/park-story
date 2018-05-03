@@ -47,7 +47,7 @@ passport.deserializeUser(function (obj, done) {
 passport.use(new FaceBookStrategy({
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: 'https://mfunaki.jp:8000/auth/facebook/callback',
+    callbackURL: process.env.HEROKU_URL ? process.env.HEROKU_URL + 'auth/facebook/callback' : 'https://mfunaki.jp:8000/auth/facebook/callback',
     profileFields: ['id', 'displayName', 'photos', 'email']
 },
 function (accessToken, refreshToken, profile, done) {
