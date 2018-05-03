@@ -12,6 +12,10 @@ cloudinary.config({
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
+const csrf = require('csurf');
+const csrfProtection = csrf({
+    cookie: true
+});
 const Course = require('../models/course');
 const Candidate = require('../models/candidate');
 const Appointment = require('../models/appointment');
@@ -24,13 +28,14 @@ const basic = auth.basic({
     file: './users.htpasswd'
 });
 
-router.get('/new', authenticationEnsurer, auth.connect(basic), (req, res, next) => {
+router.get('/new', authenticationEnsurer, auth.connect(basic), csrfProtection, (req, res, next) => {
     res.render('new', {
-        user: req.user
+        user: req.user,
+        csrfToken: req.csrfToken()
     });
 });
 
-router.post('/', upload.single('courseImgFile'), (req, res, next) => {
+router.post('/', upload.single('courseImgFile'), csrfProtection, (req, res, next) => {
     const path = req.file.path;
     cloudinary.uploader.upload(path, (result) => {
         Course.create({
@@ -99,7 +104,7 @@ router.get('/:courseId/:candidateId', authenticationEnsurer, (req, res, next) =>
     });
 });
 
-router.get('/:courseId/:candidateId/edit', authenticationEnsurer, auth.connect(basic), (req, res, next) => {
+router.get('/:courseId/:candidateId/edit', authenticationEnsurer, auth.connect(basic), csrfProtection, (req, res, next) => {
     Course.findOne({
         where: {
             courseId: req.params.courseId
@@ -114,13 +119,14 @@ router.get('/:courseId/:candidateId/edit', authenticationEnsurer, auth.connect(b
             res.render('edit', {
                 user: req.user,
                 course: course,
-                candidates: candidates
+                candidates: candidates,
+                csrfToken: req.csrfToken()
             });
         });
     });
 });
 
-router.post('/:courseId', authenticationEnsurer, auth.connect(basic), (req, res, next) => {
+router.post('/:courseId', authenticationEnsurer, auth.connect(basic), csrfProtection, (req, res, next) => {
     if (parseInt(req.query.edit) === 1) {
         Course.findOne({
             where: {
@@ -148,7 +154,7 @@ router.post('/:courseId', authenticationEnsurer, auth.connect(basic), (req, res,
     }
 });
 
-router.post('/:courseId/:candidateId', authenticationEnsurer, auth.connect(basic), (req, res, next) => {
+router.post('/:courseId/:candidateId', authenticationEnsurer, auth.connect(basic), csrfProtection, (req, res, next) => {
     if (parseInt(req.query.delete) === 1) {
         deleteCandidateAppointment(req.body.courseId, req.body.candidateId, () => {
             // TODO: リダイレクトできない原因調べる

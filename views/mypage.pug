@@ -1,9 +1,13 @@
 extends layout
 
 block content
+  br
+  h2 あなたが参加予定のコースが表示されます。
   if candidates
     each c in candidates
-      h1 #{c.candidate.course.courseName}
-      p #{c.candidate.candidateTime}
-      a(href=`/course/${c.candidate.course.courseId}/${c.candidate.candidateId}`) 確認する
+      ul.list-group.list-group-flush
+        li.list-group-item
+          h3 #{c.candidate.course.courseName}
+          p #{c.candidate.candidateTime}
+          a(href=`/course/${c.candidate.course.courseId}/${c.candidate.candidateId}`).btn.btn-info 確認する
 
