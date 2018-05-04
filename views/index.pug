@@ -1,20 +1,20 @@
 extends layout
 
 block content
-  div.jumbotron.my-3
-    h1.display-4 東京公園ストーリー
-    p.lead 東京公園ストーリーはFacebookで認証でき、認証が通ったユーザーのみ利用できるサービスです。
-  div.row
-    div.card-deck
+  div.main
+    div.main-container
+      h1 東京公園ストーリー
+      p 東京公園ストーリーはFacebookで認証でき、認証が通ったユーザーのみ利用できるサービスです。
+  div.course
+    div.course-container
       each candidate in candidates
-        div(style="width: 13rem;").card
-          img(src=`${candidate.course.courseImgFile}`, alt="").card-img-top
-          div.card-body
-            h5.card-title #{candidate.course.courseName}
+        a(href=`/course/${candidate.course.courseId}/${candidate.candidateId}`)
+          div.card
+            div(style=`background-image:url('${candidate.course.courseImgFile}')`).card-img
+            h4.card-title #{candidate.course.courseName}
             p.card-text #{candidate.course.courseMemo}
-            p.card-text #{candidate.course.formattedCourseDay}
-            p.card-text #{candidate.candidateTime}
-            a(href=`/course/${candidate.course.courseId}/${candidate.candidateId}`).btn.btn-primary 確認する
+            p.card-text 日付： #{candidate.course.formattedCourseDay}
+            p.card-text 時間： #{candidate.candidateTime}
 
 
 

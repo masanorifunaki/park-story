@@ -1,29 +1,29 @@
 extends layout
 
 block content
-  h1 #{candidate.course.courseName}
-  p #{candidate.course.courseMemo}
-  p #{formattedCourseDay}
-  p #{candidate.candidateTime}
+  div.course-page
+    div.course-page-container
+      h1.head #{candidate.course.courseName}
+      p 概要：#{candidate.course.courseMemo}
+      p 日付：#{formattedCourseDay}
+      p 時間：#{candidate.candidateTime}
+      if user
+        - var appointmentLabels = ['参加します', 'キャンセルします'];
+        if appointment
+            button(
+            data-course-id=candidate.course.courseId
+            data-user-id=user.id
+            data-candidate-id=candidate.candidateId
+            data-appointment=appointment.appointment).appointment-toggle-button #{appointmentLabels[`${appointment.appointment}`]}
+            if allUsers
+              h2.head このイベントの参加者が表示されます。
+              each u in allUsers
+                a(href=`https://www.facebook.com/${u.userId}`)
+                  img(src=`${u.user.userImg}`, alt="")
+        else
+          form(action=`/course/${candidate.course.courseId}/${candidate.candidateId}/${user.id}/submit`, method="post")
+            input(type="hidden", name="appointment" value="1")
+            button(type="submit") 参加する
 
-  if user
-    - var appointmentLabels = ['参加します', 'キャンセルします'];
-    if appointment
-        button(
-        data-course-id=candidate.course.courseId
-        data-user-id=user.id
-        data-candidate-id=candidate.candidateId
-        data-appointment=appointment.appointment).appointment-toggle-button #{appointmentLabels[`${appointment.appointment}`]}
-        div
-        h2 このイベントの参加者です。
-        if allUsers
-          each u in allUsers
-            a(href=`https://www.facebook.com/${u.userId}`)
-              img(src=`${u.user.userImg}`, alt="")
-    else
-      form(action=`/course/${candidate.course.courseId}/${candidate.candidateId}/${user.id}/submit`, method="post")
-        input(type="hidden", name="appointment" value="1")
-        button(type="submit") 参加する
-
-  else
-    a(href="/login") ログイン
+      else
+        a(href="/login") ログイン
