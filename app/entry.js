@@ -15,7 +15,7 @@ $('.appointment-toggle-button').each((i, e) => {
 
         $.post(`/course/${courseId}/${candidateId}/${userId}/ajax`, {
             candidateId: candidateId,
-            appointment: nextAppointment
+            appointment: nextAppointment,
         },
         (data) => {
             button.data('appointment', data.appointment.appointment);

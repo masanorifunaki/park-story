@@ -1,0 +1,189 @@
+$main-bg: #f4f3f4;
+$font-color: #5b5b60;
+$sub-bg: #FFF;
+$boder-color:#eee;
+$headline-color:#eb6a7a;
+@mixin nav-item {
+  text-decoration: none;
+  line-height: 65px;
+  padding: 0 25px;
+  color: $font-color;
+  display: block;
+  float: left;
+  transition: all 0.5s;
+  &:hover {
+    background-color: darken(#f4f3f4, 30%);
+  }
+}
+
+@mixin container {
+  max-width: 1170px;
+  width: 100%;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+@mixin card-container {
+  padding: 15px;
+  float: left;
+  width: 350px;
+  background: $sub-bg;
+  border: 1px solid $boder-color;
+  min-height: 340px;
+  position: relative;
+  margin-right: 30px;
+  margin-bottom: 30px;
+  border-radius: 3px;
+  vertical-align: top;
+  display: inline-block;
+}
+
+@mixin card-img {
+  width: 320px;
+  height: 192px;
+  background-position: center;
+  background-size: cover;
+}
+
+@mixin card-title {
+  vertical-align: middle;
+  overflow: hidden;
+}
+
+@mixin card-text {
+  margin-bottom: 2px;
+  color: #999;
+  font-size: 11px;
+  line-height: 1.4em;
+}
+
+@mixin headline {
+  border-bottom: 2px solid $headline-color;
+  padding-bottom: 5px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.clear {
+  clear: both;
+}
+
+body {
+  margin: 0;
+  font-family: "Hiragino Kaku Gothic ProN", sans-serif;
+  background-color: $main-bg;
+  color: $font-color;
+}
+
+.container {
+  max-width: 1170px;
+  width: 100%;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+a {
+  text-decoration: none;
+  &:link {
+    color: $font-color;
+  }
+  &:visited {
+    color: lighten($font-color, 30%);
+  }
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+header {
+  height: 65px;
+  width: 100%;
+  background-color: $sub-bg;
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid $boder-color;
+  .header-left {
+    display: block;
+    float: left;
+    a {
+      @include nav-item;
+    }
+  }
+  .header-right {
+    float: right;
+    margin-right: -25px;
+    a {
+      @include nav-item;
+    }
+    img {
+      float: left;
+      padding: 5px 25px;
+      display: block;
+      border-radius: 50%;
+    }
+  }
+}
+
+.main {
+  margin-top: 80px;
+  .main-container {
+    @include container;
+    text-align: center;
+    height: 300px;
+    background-color: $sub-bg;
+    border: 1px solid $boder-color;
+    h1 {
+      font-size: 45px;
+      letter-spacing: 5px;
+    }
+  }
+}
+
+.course {
+  margin-top: 20px;
+  .course-container {
+    @include container;
+    .card {
+      @include card-container;
+      .card-img {
+        @include card-img;
+      }
+      .card-title {
+        @include card-title;
+      }
+      .card-text {
+        @include card-text;
+      }
+      &:hover {
+        background-color: darken(#f4f3f4, 10%);
+      }
+    }
+  }
+}
+
+.page {
+  margin-top: 80px;
+  .page-container {
+    @include container;
+    background: $sub-bg;
+    padding: 15px;
+    .headline {
+      @include headline;
+    }
+  }
+}
+
+.course-page {
+  margin-top: 80px;
+  .course-page-container {
+    @include container;
+    background: $sub-bg;
+    padding: 15px;
+    .head {
+      @include headline;
+    }
+  }
+}

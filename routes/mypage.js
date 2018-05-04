@@ -26,6 +26,7 @@ router.get('/mypage/:userId', authenticationEnsurer, (req, res, next) => {
         }
     }).then((candidates) => {
         res.render('mypage', {
+            user: req.user,
             candidates: candidates
         });
     });
