@@ -10,10 +10,10 @@ var fs = require('fs');
 var http = require('http');
 // var https = require('https');
 
-var options = {
-    key: fs.readFileSync('/private/etc/apache2/ssl/ssl.key'),
-    cert: fs.readFileSync('/private/etc/apache2/ssl/ssl.crt')
-};
+// var options = {
+//     key: fs.readFileSync('/private/etc/apache2/ssl/ssl.key'),
+//     cert: fs.readFileSync('/private/etc/apache2/ssl/ssl.crt')
+// };
 
 /**
  * Get port from environment and store in Express.
