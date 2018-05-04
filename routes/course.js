@@ -154,7 +154,7 @@ router.post('/:courseId', authenticationEnsurer, auth.connect(basic), csrfProtec
     }
 });
 
-router.post('/:courseId/:candidateId', authenticationEnsurer, auth.connect(basic), csrfProtection, (req, res, next) => {
+router.post('/:courseId/:candidateId', authenticationEnsurer, auth.connect(basic), (req, res, next) => {
     if (parseInt(req.query.delete) === 1) {
         deleteCandidateAppointment(req.body.courseId, req.body.candidateId, () => {
             // TODO: リダイレクトできない原因調べる

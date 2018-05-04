@@ -7,12 +7,13 @@
 var app = require('../app');
 var debug = require('debug')('park-story:server');
 var fs = require('fs');
-var http = require('http');
+// var http = require('http');
+var https = require('https');
 
-// var options = {
-//     key: fs.readFileSync('/private/etc/apache2/ssl/ssl.key'),
-//     cert: fs.readFileSync('/private/etc/apache2/ssl/ssl.crt')
-// };
+var options = {
+    key: fs.readFileSync('/private/etc/apache2/ssl/ssl.key'),
+    cert: fs.readFileSync('/private/etc/apache2/ssl/ssl.crt')
+};
 
 /**
  * Get port from environment and store in Express.
@@ -25,7 +26,11 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+// 開発用
+var server = https.createServer(options, app);
+
+// 本番用
+// var server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
