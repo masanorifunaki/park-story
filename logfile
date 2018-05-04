@@ -14,3 +14,5 @@ LOG:  autovacuum launcher shutting down
 LOG:  received smart shutdown request
 LOG:  shutting down
 LOG:  database system is shut down
+FATAL:  lock file "postmaster.pid" already exists
+HINT:  Is another postmaster (PID 43818) running in data directory "/usr/local/var/postgres"?
