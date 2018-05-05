@@ -5,20 +5,23 @@ html
     meta(charset="utf-8")
     meta(http-equiv="X-UA-Compatible" content="IE=edge")
     meta(name="viewport" content="width=device-width, initial-scale=1")
+    link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous")
     link(rel="stylesheet", href="/stylesheets/style.css")
   body
     header
       div.container
         div.header-left
           a(href="/") 東京公園ストーリー
+          div.clear
         div.header-right
           if user
             a(href="/logout") #{user.displayName} をログアウト
             a(href=`/mypage/${user.id}`) マイページ
             img(src=`${user.photos[0].value}`, alt="")
+            div.clear
           else
             a(href="/login") ログイン
-        div.clear
+            div.clear
     div
       block content
     script(src="/javascripts/bundle.js")

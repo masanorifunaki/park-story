@@ -5,6 +5,8 @@ block content
     div.main-container
       h1 東京公園ストーリー
       p 東京公園ストーリーはFacebookで認証でき、認証が通ったユーザーのみ利用できるサービスです。
+      a(href="/auth/facebook").btn
+        i.fab.fa-facebook  Facebookでログイン
   div.course
     div.course-container
       each candidate in candidates
@@ -15,7 +17,4 @@ block content
             p.card-text #{candidate.course.courseMemo}
             p.card-text 日付： #{candidate.course.formattedCourseDay}
             p.card-text 時間： #{candidate.candidateTime}
-
-
-
-
+      div.clear

@@ -3,6 +3,7 @@ $font-color: #5b5b60;
 $sub-bg: #FFF;
 $boder-color:#eee;
 $headline-color:#eb6a7a;
+$facebook-color:#405f9e;
 @mixin nav-item {
   text-decoration: none;
   line-height: 65px;
@@ -60,6 +61,16 @@ $headline-color:#eb6a7a;
 @mixin headline {
   border-bottom: 2px solid $headline-color;
   padding-bottom: 5px;
+}
+
+@mixin btn($bg-color) {
+  padding: 8px 24px;
+  color: white;
+  display: inline-block;
+  opacity: 0.8;
+  border-radius: 4px;
+  text-align: center;
+  background-color: $facebook-color;
 }
 
 * {
@@ -138,6 +149,12 @@ header {
     h1 {
       font-size: 45px;
       letter-spacing: 5px;
+    }
+    .btn {
+      @include btn($facebook-color);
+      &:hover {
+        opacity: 1;
+      }
     }
   }
 }
