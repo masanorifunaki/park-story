@@ -6,12 +6,13 @@ const Appointment = require('../models/appointment');
 router.post('/:courseId/:candidateId/:userId/ajax', (req, res, next) => {
     const candidateId = req.body.candidateId;
     const courseId = req.params.courseId;
+    const userId = req.body.userId;
     let appointment = req.body.appointment;
     appointment = appointment ? parseInt(appointment) : 0;
 
     Appointment.upsert({
         candidateId: candidateId,
-        userId: req.params.userId,
+        userId: userId,
         appointment: appointment,
         courseId: courseId
     }).then(() => {

@@ -14,7 +14,8 @@ block content
             data-course-id=candidate.course.courseId
             data-user-id=user.id
             data-candidate-id=candidate.candidateId
-            data-appointment=appointment.appointment).appointment-toggle-button #{appointmentLabels[`${appointment.appointment}`]}
+            data-appointment=appointment.appointment
+            ).appointment-toggle-button #{appointmentLabels[`${appointment.appointment}`]}
             if allUsers
               h2.head このイベントの参加者が表示されます。
               each u in allUsers

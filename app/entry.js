@@ -7,6 +7,7 @@ import bootstrap from 'bootstrap';
 $('.appointment-toggle-button').each((i, e) => {
     const button = $(e);
     button.click(() => {
+    // const appointmentId = button.data('appointment-id');
         const courseId = button.data('course-id');
         const userId = button.data('user-id');
         const candidateId = button.data('candidate-id');
@@ -16,11 +17,14 @@ $('.appointment-toggle-button').each((i, e) => {
         $.post(`/course/${courseId}/${candidateId}/${userId}/ajax`, {
             candidateId: candidateId,
             appointment: nextAppointment,
+            userId: userId,
+        // appointmentId: appointmentId
         },
         (data) => {
             button.data('appointment', data.appointment.appointment);
             const appointmentLabels = ['参加します', 'キャンセルします'];
             button.text(appointmentLabels[data.appointment]);
+            location.reload(true);
         });
     });
 });

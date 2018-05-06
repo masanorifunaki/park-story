@@ -10458,6 +10458,7 @@ global.jQuery = _jquery2.default;
 (0, _jquery2.default)('.appointment-toggle-button').each(function (i, e) {
     var button = (0, _jquery2.default)(e);
     button.click(function () {
+        // const appointmentId = button.data('appointment-id');
         var courseId = button.data('course-id');
         var userId = button.data('user-id');
         var candidateId = button.data('candidate-id');
@@ -10466,11 +10467,14 @@ global.jQuery = _jquery2.default;
 
         _jquery2.default.post('/course/' + courseId + '/' + candidateId + '/' + userId + '/ajax', {
             candidateId: candidateId,
-            appointment: nextAppointment
+            appointment: nextAppointment,
+            userId: userId
+            // appointmentId: appointmentId
         }, function (data) {
             button.data('appointment', data.appointment.appointment);
             var appointmentLabels = ['参加します', 'キャンセルします'];
             button.text(appointmentLabels[data.appointment]);
+            location.reload(true);
         });
     });
 });
