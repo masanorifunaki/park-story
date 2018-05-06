@@ -16,7 +16,7 @@ html
         div.header-right
           if user
             a(href="/logout") #{user.displayName} をログアウト
-            a(href=`/mypage/${user.id}`) マイページ
+            a(href=`/mypage`) マイページ
             img(src=`${user.photos[0].value}`, alt="")
             div.clear
           else

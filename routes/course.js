@@ -107,6 +107,7 @@ router.get('/:courseId/:candidateId', (req, res, next) => {
     });
 });
 
+
 router.get('/:courseId/:candidateId/edit', authenticationEnsurer, auth.connect(basic), csrfProtection, (req, res, next) => {
     Course.findOne({
         where: {
