@@ -54,8 +54,9 @@ router.post('/', upload.single('courseImgFile'), csrfProtection, (req, res, next
     });
 });
 
-router.get('/:courseId/:candidateId', authenticationEnsurer, (req, res, next) => {
+router.get('/:courseId/:candidateId', (req, res, next) => {
     let allUsers = null;
+    // TODO: プロミスする
     Appointment.findAll({
         include: [{
             model: User,
@@ -66,8 +67,11 @@ router.get('/:courseId/:candidateId', authenticationEnsurer, (req, res, next) =>
             appointment: 1,
         }
     }).then((a) => {
+        console.log(a);
         allUsers = a;
     });
+
+    // TODO: プロミスする
     Candidate.findOne({
         include: [{
             model: Course,
@@ -79,7 +83,7 @@ router.get('/:courseId/:candidateId', authenticationEnsurer, (req, res, next) =>
         order: '"updatedAt" DESC'
     }).then((c) => {
         c.course.formattedCourseDay = moment(c.course.courseDay).tz('Asia/Tokyo').format('YYYY年MM月DD日');
-        if (req.user.id && Appointment) {
+        if (loginCheck(req)) {
             Appointment.findOne({
                 where: {
                     userId: req.user.id,
@@ -150,7 +154,10 @@ router.post('/:courseId', authenticationEnsurer, auth.connect(basic), csrfProtec
     } else {
         const err = new Error('不正なリクエストです');
         err.status = 400;
-        next(err);
+        err.message = '不正なリクエストです';
+        res.render('err400', {
+            err: err,
+        });
     }
 });
 
@@ -164,28 +171,46 @@ router.post('/:courseId/:candidateId', authenticationEnsurer, auth.connect(basic
 });
 
 function deleteCandidateAppointment(courseId, candidateId, done, err) {
-    // TODO: コース自体の削除をどうするか考える
-    Appointment.findAll({
-        where: {
-            candidateId: candidateId,
-        }
-    }).then((appointments) => {
-        return Promise.all(appointments.map((a) => {
-            return a.destroy();
-        }));
-    });
+    // // TODO: コース自体の削除をどうするか考える
+    // Appointment.findAll({
+    //   where: {
+    //     candidateId: candidateId,
+    //   }
+    // }).then((appointments) => {
+    //   return Promise.all(appointments.map((a) => {
+    //     return a.destroy();
+    //   }));
+    // });
 
-    Candidate.findOne({
-        where: {
-            courseId: courseId,
-            candidateId: candidateId
-        }
-    }).then((candidate) => {
-        return candidate.destroy();
-    }).then(() => {
-        if (err) return done(err);
-        done();
-    });
+    // // Candidate.findOne({
+    // //   where: {
+    // //     courseId: courseId,
+    // //     candidateId: candidateId
+    // //   }
+    // // }).then((candidate) => {
+    // //     // return Promise.all(
+    // //     //   if (!candidate) {
+    // //     //     Course.
+    // //     //   } else {
+
+    // //     //   }
+    // //     candidate.destroy());
+    // // }).then(() => {
+    // // if (err) return done(err);
+    // // done();
+    // });
+
+    // Candidate.findOne(
+    //   {
+    //     where: {
+    //       courseId: courseId
+    //     }
+    //   }
+    // ).then(candidate => {
+    //   if (!candidate) {
+    //     // さくじょ
+    //   }
+    // })
 
 }
 
@@ -206,5 +231,16 @@ function createCandidatesAndRedirect(candidateTimes, courseId, res) {
 function parseCandidateTimes(req) {
     return req.body.candidates.trim().split('\n').map((s) => s.trim());
 }
+
+// ログインチェック
+function loginCheck(req) {
+    if (req.user && req.user.id && Appointment) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+router.loginCheck = loginCheck;
 
 module.exports = router;
