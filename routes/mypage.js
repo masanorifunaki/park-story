@@ -9,27 +9,47 @@ const User = require('../models/user');
 const moment = require('moment-timezone');
 const authenticationEnsurer = require('./authentication-ensurer');
 
-router.get('/mypage/:userId', authenticationEnsurer, (req, res, next) => {
-
-    Appointment.findAll({
-        include: [{
-            model: Candidate,
-            attributes: ['candidateId', 'candidateTime'],
+router.get('/mypage', authenticationEnsurer, (req, res, next) => {
+    if (userCheck(req)) {
+        Appointment.findAll({
             include: [{
-                model: Course,
-                attributes: ['courseId', 'courseName', 'courseMemo', 'courseDay', 'courseImgFile'],
+                model: Candidate,
+                attributes: ['candidateId', 'candidateTime'],
+                include: [{
+                    model: Course,
+                    attributes: ['courseId', 'courseName', 'courseMemo', 'courseDay', 'courseImgFile'],
+                }],
             }],
-        }],
-        where: {
-            appointment: 1,
-            userId: req.user.id
-        }
-    }).then((candidates) => {
-        res.render('mypage', {
-            user: req.user,
-            candidates: candidates
+            where: {
+                appointment: 1,
+                userId: req.user.id
+            }
+        }).then((candidates) => {
+            res.render('mypage', {
+                user: req.user,
+                candidates: candidates
+            });
         });
-    });
+    } else {
+    // 不正リクエスト処理
+        const err = new Error('不正なリクエストです');
+        err.status = 400;
+        err.message = '不正なリクエストです';
+        res.render('err400', {
+            err: err,
+        });
+    }
 });
+
+// ユーザーチェック
+function userCheck(req) {
+    if (req.params.userId === req.user.userId) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+router.userCheck = userCheck;
 
 module.exports = router;

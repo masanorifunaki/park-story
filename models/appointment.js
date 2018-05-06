@@ -3,6 +3,12 @@ const loader = require('./sequelize-loader');
 const Sequelize = loader.Sequelize;
 
 const Appointment = loader.database.define('appointments', {
+    appointmentId: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false
+    },
     candidateId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
