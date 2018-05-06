@@ -67,7 +67,6 @@ router.get('/:courseId/:candidateId', (req, res, next) => {
             appointment: 1,
         }
     }).then((a) => {
-        console.log(a);
         allUsers = a;
     });
 
@@ -163,55 +162,39 @@ router.post('/:courseId', authenticationEnsurer, auth.connect(basic), csrfProtec
 
 router.post('/:courseId/:candidateId', authenticationEnsurer, auth.connect(basic), (req, res, next) => {
     if (parseInt(req.query.delete) === 1) {
-        deleteCandidateAppointment(req.body.courseId, req.body.candidateId, () => {
-            // TODO: リダイレクトできない原因調べる
-            res.redirect('/');
-        });
+        deleteCandidateAppointment(req.body.courseId, req.body.candidateId, res);
     }
 });
 
-function deleteCandidateAppointment(courseId, candidateId, done, err) {
-    // // TODO: コース自体の削除をどうするか考える
-    // Appointment.findAll({
-    //   where: {
-    //     candidateId: candidateId,
-    //   }
-    // }).then((appointments) => {
-    //   return Promise.all(appointments.map((a) => {
-    //     return a.destroy();
-    //   }));
-    // });
-
-    // // Candidate.findOne({
-    // //   where: {
-    // //     courseId: courseId,
-    // //     candidateId: candidateId
-    // //   }
-    // // }).then((candidate) => {
-    // //     // return Promise.all(
-    // //     //   if (!candidate) {
-    // //     //     Course.
-    // //     //   } else {
-
-    // //     //   }
-    // //     candidate.destroy());
-    // // }).then(() => {
-    // // if (err) return done(err);
-    // // done();
-    // });
-
-    // Candidate.findOne(
-    //   {
-    //     where: {
-    //       courseId: courseId
-    //     }
-    //   }
-    // ).then(candidate => {
-    //   if (!candidate) {
-    //     // さくじょ
-    //   }
-    // })
-
+function deleteCandidateAppointment(courseId, candidateId, res) {
+    // TODO: コース自体の削除をどうするか考える
+    Appointment.findAll({
+        where: {
+            candidateId: candidateId,
+        }
+    }).then((appointments) => {
+        const promises = appointments.map((a) => {
+            return a.destroy();
+        });
+        return Promise.all(promises);
+    }).then(() => {
+        Candidate.findOne({
+            where: {
+                courseId: courseId,
+                candidateId: candidateId
+            }
+        }).then((candidate) => {
+            return candidate.destroy();
+        });
+    }).then((candidate) => {
+        if (!candidate) {
+            Course.findById(courseId).then((course) => {
+                return course.destroy();
+            });
+        } else {
+            res.redirect('/');
+        }
+    });
 }
 
 function createCandidatesAndRedirect(candidateTimes, courseId, res) {
