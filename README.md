@@ -72,4 +72,4 @@
 |courseId|数値|関連するコースID|
 |boardId|数値|掲示板のID|
 
-
+|board の属性名|形式|内容|

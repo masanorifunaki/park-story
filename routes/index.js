@@ -16,7 +16,7 @@ router.get('/', function (req, res, next) {
         order: '"updatedAt" DESC'
     }).then((candidates) => {
         candidates.forEach((candidate) => {
-            candidate.course.formattedCourseDay = formattedCourseDay(candidate.course.formattedCourseDay);
+            candidate.course.formattedCourseDay = formattedCourseDay(candidate.course.courseDay);
         });
         res.render('index', {
             title: title,

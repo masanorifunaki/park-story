@@ -7,8 +7,8 @@ block content
       if candidates
         each c in candidates
           h3.headline コース名：#{c.candidate.course.courseName}
-          p 日付：#{c.course.formattedCourseDay}
+          p 日付：#{c.candidate.course.formattedCourseDay}
           p 時間：#{c.candidate.candidateTime}
-          p 場所：#{c.course.coursePlace}
+          p 場所：#{c.candidate.course.coursePlace}
           a(href=`/course/${c.candidate.course.courseId}/${c.candidate.candidateId}`).btn 確認する
 
