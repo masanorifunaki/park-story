@@ -20,22 +20,15 @@ $facebook-color:#405f9e;
 @mixin container {
   max-width: 1170px;
   width: 100%;
-  padding: 0 15px;
   margin: 0 auto;
 }
 
 @mixin card-container {
   padding: 15px;
-  float: left;
-  width: 350px;
   background: $sub-bg;
   border: 1px solid $boder-color;
-  min-height: 340px;
-  position: relative;
-  margin-right: 30px;
-  margin-bottom: 30px;
+  margin: 5px 5px;
   border-radius: 3px;
-  vertical-align: top;
   display: inline-block;
 }
 
@@ -161,8 +154,11 @@ header {
 
 .course {
   margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
   .course-container {
     @include container;
+    padding: 0 40px;
     .card {
       @include card-container;
       .card-img {
