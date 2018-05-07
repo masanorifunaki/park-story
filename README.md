@@ -13,7 +13,7 @@
 |/login|GET|ログイン|
 |/logout|GET|ログアウト|
 |/course/new|GET|コース作成ページ（管理者専用）|
-|/course/:courseId/:candidateId|GET|コース詳細ページ/参加表明時、参加者表示|
+|/course/:courseId/:candidateId|GET|コース詳細ページ/参加表明時、参加者表示/参加用掲示板|
 |/course/:courseId/:candidateId/edit|GET|コース編集ページ|
 ## WebAPIのURL
 |パス|メソッド|処理内容|利用方法|
@@ -33,6 +33,8 @@
 |routes/course.js|コースに関連する処理|
 |routes/appointment.js|参加の更新に関する処理|
 |routes/authentication-ensurer.js|facebook認証|
+|routes/board.js|掲示板に関する処理|
+
 ## データモデル一覧
 |ファイル名|責務|テーブル名|
 |----|----|----|
@@ -40,6 +42,7 @@
 |models/course.js|コースの定義と永続化|courses
 |models/candidate.js|候補の定義と永続化|candidates
 |models/appointment.js|参加の定義と永続化|appointments
+|models/board.js|掲示板の定義と永続化|boards
 
 |user の属性名|形式|内容|
 |----|----|----|
@@ -59,12 +62,14 @@
 |----|----|----|
 |candidateId|数値|ID 主キー 連番|
 |candidateTime|文字列|開催時間|
-|courseId|文字列|関連するコースID|
+|courseId|数値|関連するコースID|
 
 |appointment の属性名|形式|内容|
 |----|----|----|
 |candidateId|数値|ID 主キー 連番|
 |userId|数値|facebookのユーザーID 主キー|
 |appointment|数値|参加ID|
-|courseId|文字列|関連するコースID|
+|courseId|数値|関連するコースID|
+|boardId|数値|掲示板のID|
+
 
