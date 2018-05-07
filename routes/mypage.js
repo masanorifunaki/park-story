@@ -27,7 +27,7 @@ router.get('/mypage', authenticationEnsurer, (req, res, next) => {
             }
         }).then((candidates) => {
             candidates.forEach((candidate) => {
-                candidate.course.formattedCourseDay = formattedCourseDay(candidate.course.formattedCourseDay);
+                candidate.candidate.course.formattedCourseDay = formattedCourseDay(candidate.candidate.course.courseDay);
             });
             res.render('mypage', {
                 user: req.user,
