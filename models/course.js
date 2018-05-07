@@ -24,6 +24,10 @@ const Course = loader.database.define('courses', {
     courseImgFile: {
         type: Sequelize.STRING,
         allowNull: true
+    },
+    coursePlace: {
+        type: Sequelize.TEXT,
+        allowNull: true
     }
 }, {
     freezeTableName: true,

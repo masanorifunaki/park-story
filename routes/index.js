@@ -3,6 +3,7 @@ var router = express.Router();
 const Course = require('../models/course');
 const Candidate = require('../models/candidate');
 const moment = require('moment-timezone');
+const formattedCourseDay = require('../routes/course').formattedCourseDay;
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -10,12 +11,12 @@ router.get('/', function (req, res, next) {
     Candidate.findAll({
         include: [{
             model: Course,
-            attributes: ['courseId', 'courseName', 'courseMemo', 'courseDay', 'courseImgFile']
+            attributes: ['courseId', 'courseName', 'courseMemo', 'courseDay', 'courseImgFile', 'coursePlace']
         }],
         order: '"updatedAt" DESC'
     }).then((candidates) => {
         candidates.forEach((candidate) => {
-            candidate.course.formattedCourseDay = moment(candidate.course.courseDay).tz('Asia/Tokyo').format('YYYY/MM/DD');
+            candidate.course.formattedCourseDay = formattedCourseDay(candidate.course.formattedCourseDay);
         });
         res.render('index', {
             title: title,
