@@ -56,8 +56,7 @@ router.post('/', upload.single('courseImgFile'), csrfProtection, (req, res, next
 
 router.get('/:courseId/:candidateId', (req, res, next) => {
     let allUsers = null;
-    // TODO: プロミスする
-    Appointment.findAll({
+    let promiseAllusers = Appointment.findAll({
         include: [{
             model: User,
             attributes: ['userId', 'userName', 'userImg', ]
@@ -70,7 +69,7 @@ router.get('/:courseId/:candidateId', (req, res, next) => {
         allUsers = a;
     });
 
-    // TODO: プロミスする
+    // TODO: プロミスしたほうが良いのかな？
     Candidate.findOne({
         include: [{
             model: Course,
@@ -89,6 +88,7 @@ router.get('/:courseId/:candidateId', (req, res, next) => {
                     candidateId: req.params.candidateId
                 }
             }).then((appointment) => {
+                Promise.all(promiseAllusers);
                 res.render('course', {
                     user: req.user,
                     candidate: c,
