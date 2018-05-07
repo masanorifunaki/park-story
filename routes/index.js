@@ -26,5 +26,8 @@ router.get('/', function (req, res, next) {
 
 });
 
+router.get('/privacy', (req, res, next) => {
+    res.render('privacy');
+});
 
 module.exports = router;

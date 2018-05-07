@@ -70,7 +70,6 @@ header {
   .main .main-container {
     max-width: 1170px;
     width: 100%;
-    padding: 0 15px;
     margin: 0 auto;
     text-align: center;
     height: 300px;
@@ -91,24 +90,20 @@ header {
         opacity: 1; }
 
 .course {
-  margin-top: 20px; }
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around; }
   .course .course-container {
     max-width: 1170px;
     width: 100%;
-    padding: 0 15px;
-    margin: 0 auto; }
+    margin: 0 auto;
+    padding: 0 40px; }
     .course .course-container .card {
       padding: 15px;
-      float: left;
-      width: 350px;
       background: #FFF;
       border: 1px solid #eee;
-      min-height: 340px;
-      position: relative;
-      margin-right: 30px;
-      margin-bottom: 30px;
+      margin: 5px 5px;
       border-radius: 3px;
-      vertical-align: top;
       display: inline-block; }
       .course .course-container .card .card-img {
         width: 320px;
@@ -131,7 +126,6 @@ header {
   .page .page-container {
     max-width: 1170px;
     width: 100%;
-    padding: 0 15px;
     margin: 0 auto;
     background: #FFF;
     padding: 15px; }
@@ -144,7 +138,6 @@ header {
   .course-page .course-page-container {
     max-width: 1170px;
     width: 100%;
-    padding: 0 15px;
     margin: 0 auto;
     background: #FFF;
     padding: 15px; }
