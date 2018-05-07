@@ -7,6 +7,7 @@ block content
       p 概要：#{candidate.course.courseMemo}
       p 日付：#{formattedCourseDay}
       p 時間：#{candidate.candidateTime}
+      p 場所：#{candidate.course.coursePlace}
       if user
         - var appointmentLabels = ['参加します', 'キャンセルします'];
         if appointment

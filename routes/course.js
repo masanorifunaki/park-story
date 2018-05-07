@@ -42,7 +42,8 @@ router.post('/', upload.single('courseImgFile'), csrfProtection, (req, res, next
             courseName: req.body.courseName,
             courseMemo: req.body.courseMemo,
             courseDay: req.body.courseDay,
-            courseImgFile: result.url
+            courseImgFile: result.url,
+            coursePlace: req.body.coursePlace,
         }).then((course) => {
             const candidateTimes = parseCandidateTimes(req);
             if (candidateTimes) {
@@ -73,14 +74,14 @@ router.get('/:courseId/:candidateId', (req, res, next) => {
     Candidate.findOne({
         include: [{
             model: Course,
-            attributes: ['courseId', 'courseName', 'courseMemo', 'courseDay']
+            attributes: ['courseId', 'courseName', 'courseMemo', 'courseDay', 'coursePlace']
         }],
         where: {
             candidateId: req.params.candidateId
         },
         order: '"updatedAt" DESC'
     }).then((c) => {
-        c.course.formattedCourseDay = moment(c.course.courseDay).tz('Asia/Tokyo').format('YYYY年MM月DD日');
+        c.course.formattedCourseDay = formattedCourseDay(c.course.courseDay);
         if (loginCheck(req)) {
             Appointment.findOne({
                 where: {
@@ -141,7 +142,8 @@ router.post('/:courseId', authenticationEnsurer, auth.connect(basic), csrfProtec
                 courseId: course.courseId,
                 courseName: req.body.courseName,
                 courseMemo: req.body.courseMemo,
-                courseDay: req.body.courseDay
+                courseDay: req.body.courseDay,
+                coursePlace: req.body.coursePlace,
             }).then(() => {
                 const candidateTimes = parseCandidateTimes(req);
                 if (candidateTimes) {
@@ -226,5 +228,12 @@ function loginCheck(req) {
 }
 
 router.loginCheck = loginCheck;
+
+// 年月日フォーマット
+function formattedCourseDay(courseDay) {
+    return moment(courseDay).tz('Asia/Tokyo').format('YYYY年MM月DD日');
+}
+
+router.formattedCourseDay = formattedCourseDay;
 
 module.exports = router;

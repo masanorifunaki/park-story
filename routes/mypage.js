@@ -8,6 +8,7 @@ const Appointment = require('../models/appointment');
 const User = require('../models/user');
 const moment = require('moment-timezone');
 const authenticationEnsurer = require('./authentication-ensurer');
+const formattedCourseDay = require('../routes/course').formattedCourseDay;
 
 router.get('/mypage', authenticationEnsurer, (req, res, next) => {
     if (userCheck(req)) {
@@ -17,7 +18,7 @@ router.get('/mypage', authenticationEnsurer, (req, res, next) => {
                 attributes: ['candidateId', 'candidateTime'],
                 include: [{
                     model: Course,
-                    attributes: ['courseId', 'courseName', 'courseMemo', 'courseDay', 'courseImgFile'],
+                    attributes: ['courseId', 'courseName', 'courseMemo', 'courseDay', 'courseImgFile', 'coursePlace'],
                 }],
             }],
             where: {
@@ -25,6 +26,9 @@ router.get('/mypage', authenticationEnsurer, (req, res, next) => {
                 userId: req.user.id
             }
         }).then((candidates) => {
+            candidates.forEach((candidate) => {
+                candidate.course.formattedCourseDay = formattedCourseDay(candidate.course.formattedCourseDay);
+            });
             res.render('mypage', {
                 user: req.user,
                 candidates: candidates
