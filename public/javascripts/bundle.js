@@ -10493,6 +10493,10 @@ global.jQuery = _jquery2.default;
     });
 });
 
+(0, _jquery2.default)('#menu-icon').click(function () {
+    (0, _jquery2.default)('.nav').toggle();
+});
+
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
