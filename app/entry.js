@@ -42,3 +42,7 @@ $('.deleteCandidateAppointment').each((i, e) => {
         });
     });
 });
+
+$('#menu-icon').click(function () {
+    $('.nav').toggle();
+});

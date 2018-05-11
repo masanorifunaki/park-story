@@ -33,36 +33,25 @@ header {
   top: 0;
   z-index: 10;
   border-bottom: 1px solid #eee; }
-  header .header-left {
-    display: block;
-    float: left; }
-    header .header-left a {
+  header .nav-menu ul {
+    display: none; }
+  header .nav ul {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+    margin: 0;
+    list-style-type: none; }
+    header .nav ul .nav-item {
       text-decoration: none;
       line-height: 65px;
-      padding: 0 25px;
+      padding: 0px 25px;
       color: #5b5b60;
       display: block;
-      float: left;
       transition: all 0.5s; }
-      header .header-left a:hover {
+      header .nav ul .nav-item:hover {
         background-color: #aba3ab; }
-  header .header-right {
-    float: right;
-    margin-right: -25px; }
-    header .header-right a {
-      text-decoration: none;
-      line-height: 65px;
-      padding: 0 25px;
-      color: #5b5b60;
-      display: block;
-      float: left;
-      transition: all 0.5s; }
-      header .header-right a:hover {
-        background-color: #aba3ab; }
-    header .header-right img {
-      float: left;
-      padding: 5px 25px;
-      display: block;
+    header .nav ul img {
+      margin-top: 5px;
       border-radius: 50%; }
 
 .main {
@@ -144,3 +133,38 @@ header {
     .course-page .course-page-container .head {
       border-bottom: 2px solid #eb6a7a;
       padding-bottom: 5px; }
+
+@media all and (max-width: 670px) {
+  header {
+    height: 65px;
+    width: 100%;
+    background-color: #FFF;
+    border-bottom: 1px solid #eee; }
+    header .nav {
+      display: none;
+      background-color: black; }
+      header .nav ul {
+        display: flex;
+        flex-flow: column; }
+      header .nav .nav-item {
+        text-decoration: none;
+        line-height: 65px;
+        padding: 0px 25px;
+        color: #5b5b60;
+        display: block;
+        transition: all 0.5s; }
+        header .nav .nav-item:hover {
+          background-color: #aba3ab; }
+      header .nav img {
+        margin-top: 5px;
+        border-radius: 50%; }
+      header .nav .menu-icon {
+        line-height: 65px;
+        display: block; }
+    header .nav-menu ul {
+      display: flex;
+      flex-flow: row;
+      justify-content: flex-end;
+      margin: 0;
+      line-height: 65px;
+      list-style-type: none; } }

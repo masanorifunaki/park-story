@@ -5,23 +5,30 @@ html
     meta(charset="utf-8")
     meta(http-equiv="X-UA-Compatible" content="IE=edge")
     meta(name="viewport" content="width=device-width, initial-scale=1")
+    link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous")
     link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous")
     link(rel="stylesheet", href="/stylesheets/style.css")
   body
     header
-      div.container
-        div.header-left
-          a(href="/") 東京公園ストーリー
-          div.clear
-        div.header-right
+      div.nav-menu
+        ul
+          li
+            i.fas.fa-align-justify#menu-icon
+      div.nav
+        ul
+          li
+            a(href="/").nav-item 東京公園ストーリー
           if user
-            a(href="/logout") #{user.displayName} をログアウト
-            a(href=`/mypage`) マイページ
-            img(src=`${user.photos[0].value}`, alt="")
-            div.clear
+            li
+              a(href="/logout").nav-item #{user.displayName} をログアウト
+            li
+              a(href=`/mypage`).nav-item マイページ
+            li
+              img(src=`${user.photos[0].value}`, alt="")
           else
-            a(href="/login") ログイン
-            div.clear
+            li
+              a(href="/login").nav-item ログイン
+
     div
       block content
     script(src="/javascripts/bundle.js")
