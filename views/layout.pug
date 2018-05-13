@@ -10,24 +10,22 @@ html
     link(rel="stylesheet", href="/stylesheets/style.css")
   body
     header
-      div.nav-menu
-        ul
-          li
-            i.fas.fa-align-justify#menu-icon
-      div.nav
-        ul
-          li
-            a(href="/").nav-item 東京公園ストーリー
-          if user
-            li
-              a(href="/logout").nav-item #{user.displayName} をログアウト
-            li
-              a(href=`/mypage`).nav-item マイページ
-            li
-              img(src=`${user.photos[0].value}`, alt="")
-          else
-            li
-              a(href="/login").nav-item ログイン
+      ul.nav
+        li.nav-item-icon#menu-icon
+          i.fas.fa-align-justify
+        li.nav-item
+          a(href="/") 東京公園ストーリー
+        if user
+          li.nav-item
+            a(href="/logout") #{user.displayName} をログアウト
+          li.nav-item
+            a(href=`/mypage`) マイページ
+          li.nav-item
+            img(src=`${user.photos[0].value}`, alt="")
+        else
+          li.nav-item
+            a(href="/login") ログイン
+
 
     div
       block content

@@ -22,6 +22,22 @@ $facebook-color:#405f9e;
   margin: 0 auto;
 }
 
+@mixin nav {
+  margin: 0 auto;
+  display: flex;
+  flex-flow: wrap;
+  list-style: none;
+  align-items: center;
+}
+
+@mixin nav-item {
+  text-decoration: none;
+  color: $font-color;
+  transition: all 0.5s;
+  display: block;
+  flex: 0 1 auto;
+}
+
 @mixin card-container {
   padding: 15px;
   background: $sub-bg;
@@ -101,30 +117,31 @@ a {
 }
 
 header {
+  @include container;
   height: 65px;
-  width: 100%;
   background-color: $sub-bg;
   position: fixed;
   top: 0;
-  z-index: 10;
+  z-index: 1;
   border-bottom: 1px solid $boder-color;
-  .nav-menu ul {
-    display: none;
+}
+
+.nav {
+  @include nav;
+  justify-content: space-around;
+}
+
+.nav-item {
+  @include nav-item;
+  img {
+    margin-top: 5px;
+    border-radius: 50%;
   }
-  .nav ul {
-    display: flex;
-    flex-flow: row;
-    justify-content: space-around;
-    margin: 0;
-    list-style-type: none;
-    .nav-item {
-      @include nav-item;
-    }
-    img {
-      margin-top: 5px;
-      border-radius: 50%;
-    }
-  }
+}
+
+.nav-item-icon {
+  @include nav-item;
+  display: none;
 }
 
 .main {
@@ -199,36 +216,31 @@ header {
 
 @media all and (max-width: 670px) {
   header {
-    height: 65px;
     width: 100%;
     background-color: $sub-bg;
     border-bottom: 1px solid $boder-color;
-    .nav {
-      display: none;
-      background-color: black;
-      ul {
-        display: flex;
-        flex-flow: column;
-      }
-      .nav-item {
-        @include nav-item;
-      }
-      img {
-        margin-top: 5px;
-        border-radius: 50%;
-      }
-      .menu-icon {
-        line-height: 65px;
-        display: block;
-      }
-    }
-    .nav-menu ul {
-      display: flex;
-      flex-flow: row;
-      justify-content: flex-end;
-      margin: 0;
-      line-height: 65px;
-      list-style-type: none;
-    }
+  }
+  .nav {
+    @include nav;
+    flex-flow: column;
+    justify-content: space-around;
+    align-items: flex-end;
+  }
+  .nav-bg {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-color: #405f9e;
+  }
+  .nav-item {
+    display: none;
+  }
+  .nav-item-icon {
+    @include nav-item;
+    display: block;
+  }
+  .fas {
+    vertical-align: middle;
+    margin: 10px 10px;
+    font-size: 32px;
   }
 }
