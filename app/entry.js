@@ -44,5 +44,6 @@ $('.deleteCandidateAppointment').each((i, e) => {
 });
 
 $('#menu-icon').click(function () {
-    $('.nav').toggle();
+    $(this).parent().toggleClass('nav-bg');
+    $('.nav-item').toggle();
 });
