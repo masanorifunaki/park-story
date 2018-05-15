@@ -1,5 +1,6 @@
 $main-bg: #f4f3f4;
 $font-color: #5b5b60;
+$font-color-white: #FFF;
 $sub-bg: #FFF;
 $boder-color:#eee;
 $headline-color:#eb6a7a;
@@ -25,9 +26,9 @@ $facebook-color:#405f9e;
 @mixin nav {
   margin: 0 auto;
   display: flex;
+  line-height: 65px;
   flex-flow: wrap;
   list-style: none;
-  align-items: center;
 }
 
 @mixin nav-item {
@@ -117,7 +118,8 @@ a {
 }
 
 header {
-  @include container;
+  width: 100%;
+  margin: 0 auto;
   height: 65px;
   background-color: $sub-bg;
   position: fixed;
@@ -128,6 +130,7 @@ header {
 
 .nav {
   @include nav;
+  max-width: 1170px;
   justify-content: space-around;
 }
 
@@ -149,15 +152,22 @@ header {
   .main-container {
     @include container;
     text-align: center;
-    height: 300px;
+    max-height: 400px;
+    height: 100%;
     background-color: $sub-bg;
     border: 1px solid $boder-color;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    padding: 20px;
     h1 {
       font-size: 45px;
       letter-spacing: 5px;
     }
     .btn {
       @include btn($facebook-color);
+      width: 35%;
+      margin: 0 auto;
       &:hover {
         opacity: 1;
       }
@@ -167,12 +177,14 @@ header {
 
 .course {
   margin-top: 20px;
-  display: flex;
-  justify-content: space-around;
   .course-container {
     @include container;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
     padding: 0 40px;
     .card {
+      flex: 0 1 350px;
       @include card-container;
       .card-img {
         @include card-img;
@@ -242,5 +254,70 @@ header {
     vertical-align: middle;
     margin: 10px 10px;
     font-size: 32px;
+  }
+  .open {
+    display: block;
+  }
+  a {
+    text-decoration: none;
+    &:link {
+      color: $font-color-white;
+    }
+    &:visited {
+      color: lighten($font-color-white, 30%);
+    }
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  .main {
+    margin-top: 80px;
+    .main-container {
+      @include container;
+      text-align: left;
+      align-content: flex-start;
+      max-height: 400px;
+      height: 100%;
+      background-color: $sub-bg;
+      border: 1px solid $boder-color;
+      display: flex;
+      flex-flow: column;
+      justify-content: space-around;
+      padding: 20px;
+      .btn {
+        @include btn($facebook-color);
+        width: 100%;
+        margin: 0 auto;
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+  .course {
+    margin-top: 20px;
+    .course-container {
+      @include container;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      .card {
+        width: 350px;
+        flex: 0 1 350px;
+        @include card-container;
+        .card-img {
+          @include card-img;
+        }
+        .card-title {
+          @include card-title;
+        }
+        .card-text {
+          @include card-text;
+        }
+        &:hover {
+          background-color: darken(#f4f3f4, 10%);
+        }
+      }
+    }
   }
 }

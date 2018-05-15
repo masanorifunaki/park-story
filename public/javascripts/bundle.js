@@ -10495,7 +10495,12 @@ global.jQuery = _jquery2.default;
 
 (0, _jquery2.default)('#menu-icon').click(function () {
     (0, _jquery2.default)(this).parent().toggleClass('nav-bg');
-    (0, _jquery2.default)('.nav-item').toggle();
+    (0, _jquery2.default)('.nav-item').toggleClass('open');
+    if ((0, _jquery2.default)(this).find('i').hasClass('fa-align-justify')) {
+        (0, _jquery2.default)(this).find('i').removeClass('fa-align-justify').addClass('fa-times');
+    } else {
+        (0, _jquery2.default)(this).find('i').removeClass('fa-times').addClass('fa-align-justify');
+    }
 });
 
 /***/ }),

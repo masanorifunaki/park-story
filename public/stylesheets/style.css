@@ -26,7 +26,6 @@ a {
     text-decoration: underline; }
 
 header {
-  max-width: 1170px;
   width: 100%;
   margin: 0 auto;
   height: 65px;
@@ -39,9 +38,10 @@ header {
 .nav {
   margin: 0 auto;
   display: flex;
+  line-height: 65px;
   flex-flow: wrap;
   list-style: none;
-  align-items: center;
+  max-width: 1170px;
   justify-content: space-around; }
 
 .nav-item {
@@ -69,9 +69,14 @@ header {
     width: 100%;
     margin: 0 auto;
     text-align: center;
-    height: 300px;
+    max-height: 400px;
+    height: 100%;
     background-color: #FFF;
-    border: 1px solid #eee; }
+    border: 1px solid #eee;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    padding: 20px; }
     .main .main-container h1 {
       font-size: 45px;
       letter-spacing: 5px; }
@@ -82,20 +87,24 @@ header {
       opacity: 0.8;
       border-radius: 4px;
       text-align: center;
-      background-color: #405f9e; }
+      background-color: #405f9e;
+      width: 35%;
+      margin: 0 auto; }
       .main .main-container .btn:hover {
         opacity: 1; }
 
 .course {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-around; }
+  margin-top: 20px; }
   .course .course-container {
     max-width: 1170px;
     width: 100%;
     margin: 0 auto;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
     padding: 0 40px; }
     .course .course-container .card {
+      flex: 0 1 350px;
       padding: 15px;
       background: #FFF;
       border: 1px solid #eee;
@@ -150,9 +159,9 @@ header {
   .nav {
     margin: 0 auto;
     display: flex;
+    line-height: 65px;
     flex-flow: wrap;
     list-style: none;
-    align-items: center;
     flex-flow: column;
     justify-content: space-around;
     align-items: flex-end; }
@@ -172,4 +181,75 @@ header {
   .fas {
     vertical-align: middle;
     margin: 10px 10px;
-    font-size: 32px; } }
+    font-size: 32px; }
+  .open {
+    display: block; }
+  a {
+    text-decoration: none; }
+    a:link {
+      color: #FFF; }
+    a:visited {
+      color: white; }
+    a:hover {
+      text-decoration: underline; }
+  .main {
+    margin-top: 80px; }
+    .main .main-container {
+      max-width: 1170px;
+      width: 100%;
+      margin: 0 auto;
+      text-align: left;
+      align-content: flex-start;
+      max-height: 400px;
+      height: 100%;
+      background-color: #FFF;
+      border: 1px solid #eee;
+      display: flex;
+      flex-flow: column;
+      justify-content: space-around;
+      padding: 20px; }
+      .main .main-container .btn {
+        padding: 8px 24px;
+        color: white;
+        display: inline-block;
+        opacity: 0.8;
+        border-radius: 4px;
+        text-align: center;
+        background-color: #405f9e;
+        width: 100%;
+        margin: 0 auto; }
+        .main .main-container .btn:hover {
+          opacity: 1; }
+  .course {
+    margin-top: 20px; }
+    .course .course-container {
+      max-width: 1170px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap; }
+      .course .course-container .card {
+        width: 350px;
+        flex: 0 1 350px;
+        padding: 15px;
+        background: #FFF;
+        border: 1px solid #eee;
+        margin: 5px 5px;
+        border-radius: 3px;
+        display: inline-block; }
+        .course .course-container .card .card-img {
+          width: 320px;
+          height: 192px;
+          background-position: center;
+          background-size: cover; }
+        .course .course-container .card .card-title {
+          vertical-align: middle;
+          overflow: hidden; }
+        .course .course-container .card .card-text {
+          margin-bottom: 2px;
+          color: #999;
+          font-size: 11px;
+          line-height: 1.4em; }
+        .course .course-container .card:hover {
+          background-color: #dcd8dc; } }
