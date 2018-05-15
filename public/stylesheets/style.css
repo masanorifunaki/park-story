@@ -184,14 +184,6 @@ header {
     font-size: 32px; }
   .open {
     display: block; }
-  a {
-    text-decoration: none; }
-    a:link {
-      color: #FFF; }
-    a:visited {
-      color: white; }
-    a:hover {
-      text-decoration: underline; }
   .main {
     margin-top: 80px; }
     .main .main-container {

@@ -258,18 +258,6 @@ header {
   .open {
     display: block;
   }
-  a {
-    text-decoration: none;
-    &:link {
-      color: $font-color-white;
-    }
-    &:visited {
-      color: lighten($font-color-white, 30%);
-    }
-    &:hover {
-      text-decoration: underline;
-    }
-  }
   .main {
     margin-top: 80px;
     .main-container {
