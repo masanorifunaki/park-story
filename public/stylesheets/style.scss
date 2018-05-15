@@ -29,7 +29,6 @@ $facebook-color:#405f9e;
   line-height: 65px;
   flex-flow: wrap;
   list-style: none;
-  align-items: center;
 }
 
 @mixin nav-item {
@@ -119,7 +118,8 @@ a {
 }
 
 header {
-  @include container;
+  width: 100%;
+  margin: 0 auto;
   height: 65px;
   background-color: $sub-bg;
   position: fixed;
@@ -130,6 +130,7 @@ header {
 
 .nav {
   @include nav;
+  max-width: 1170px;
   justify-content: space-around;
 }
 

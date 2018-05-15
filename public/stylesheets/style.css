@@ -26,7 +26,6 @@ a {
     text-decoration: underline; }
 
 header {
-  max-width: 1170px;
   width: 100%;
   margin: 0 auto;
   height: 65px;
@@ -42,7 +41,7 @@ header {
   line-height: 65px;
   flex-flow: wrap;
   list-style: none;
-  align-items: center;
+  max-width: 1170px;
   justify-content: space-around; }
 
 .nav-item {
@@ -163,7 +162,6 @@ header {
     line-height: 65px;
     flex-flow: wrap;
     list-style: none;
-    align-items: center;
     flex-flow: column;
     justify-content: space-around;
     align-items: flex-end; }
