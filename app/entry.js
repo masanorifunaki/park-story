@@ -45,5 +45,11 @@ $('.deleteCandidateAppointment').each((i, e) => {
 
 $('#menu-icon').click(function () {
     $(this).parent().toggleClass('nav-bg');
-    $('.nav-item').toggle();
+    $('.nav-item').toggleClass('open');
+    if ($(this).find('i').hasClass('fa-align-justify')) {
+        $(this).find('i').removeClass('fa-align-justify').addClass('fa-times');
+    } else {
+        $(this).find('i').removeClass('fa-times').addClass('fa-align-justify');
+    }
+
 });
