@@ -13,6 +13,7 @@ var User = require('./models/user');
 var Course = require('./models/course');
 var Candidate = require('./models/candidate');
 var Appointment = require('./models/appointment');
+var Board = require('./models/board');
 
 User.sync().then(() => {
     Course.sync().then(() => {
@@ -29,7 +30,12 @@ User.sync().then(() => {
             Appointment.belongsTo(Course, {
                 foreignKey: 'courseId'
             });
-            Appointment.sync();
+            Appointment.sync().then(() => {
+                Board.belongsTo(Appointment, {
+                    foreignKey: 'candidateId'
+                });
+                Board.sync();
+            });
         });
     });
 });

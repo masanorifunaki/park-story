@@ -5,6 +5,8 @@
 |コース|course|公園のコース|
 |候補|candidate|候補時間|
 |参加予定|appointment|参加意思|
+|掲示板|board|掲示板|
+
 # URL設計
 |パス|メソッド|ページ内容|
 |----|----|----|
@@ -15,6 +17,7 @@
 |/course/new|GET|コース作成ページ（管理者専用）|
 |/course/:courseId/:candidateId|GET|コース詳細ページ/参加表明時、参加者表示/参加用掲示板|
 |/course/:courseId/:candidateId/edit|GET|コース編集ページ|
+
 ## WebAPIのURL
 |パス|メソッド|処理内容|利用方法|
 |----|----|----|----|
@@ -23,6 +26,8 @@
 |/course/:courseId/:candidateId/:userId/submit|POST|参加表明|フォーム|
 |/course/:courseId/:candidateId/:userId/ajax|POST|参加更新|Ajax|
 |/course/:courseId/:candidateId?delete=1|POST|候補時間、参加表明削除|Ajax|
+|/course/:courseId/:candidateId/?post=1|POST|掲示板へ投稿|フォーム|
+
 # モジュール設計
 ## Router モジュール一覧
 |ファイル名|責務|
@@ -70,6 +75,12 @@
 |userId|数値|facebookのユーザーID 主キー|
 |appointment|数値|参加ID|
 |courseId|数値|関連するコースID|
-|boardId|数値|掲示板のID|
 
 |board の属性名|形式|内容|
+|----|----|----|
+|boardId|数値|ID 主キー 連番|
+|candidateId|数値|候補ID|
+|boardContent|文字列|投稿内容|
+|postBy|数値|facebookのユーザーID|
+
+
